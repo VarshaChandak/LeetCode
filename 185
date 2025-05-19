@@ -1,0 +1,16 @@
+select d.name as Department,top.name as Employee,top.salary as Salary
+from (
+select *
+from employee e1
+where e1.salary >= (
+    select min(temp.salary)
+    from(
+    select salary
+    from employee e2
+    where e1.departmentId=e2.departmentId
+    group by salary
+    order by salary desc
+    limit 3) as temp
+) ) as top left join department d
+on top.departmentId=d.id
+order by salary 
