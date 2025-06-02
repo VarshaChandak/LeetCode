@@ -1,0 +1,22 @@
+class Solution {
+    public boolean isZeroArray(int[] nums, int[][] queries) {
+        int n = nums.length;
+        int[] diff = new int[n + 1];
+        for (int[] query : queries) {
+            int l = query[0];
+            int r = query[1];
+            diff[l] += 1;
+            if (r + 1 < n) {
+                diff[r + 1] -= 1;
+            }
+        }
+        int cov = 0;
+        for (int i = 0; i < n; i++) {
+            cov += diff[i];
+            if (cov < nums[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
