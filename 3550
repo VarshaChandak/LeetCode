@@ -1,0 +1,18 @@
+class Solution {
+    public int smallestIndex(int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            int p = 0;
+            int q = nums[i];
+
+            while (q > 0) {
+                p += q % 10;
+                q /= 10;
+            }
+
+            if (p == i) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
