@@ -1,0 +1,23 @@
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        ArrayList<String> arr = new ArrayList<>();
+        printallparan(n, n, "",arr);
+          return arr;
+    }
+    public static void  printallparan(int open,int close,String ans,ArrayList arr){
+        if(open==0 && close==0){
+            arr.add(ans);
+            return;
+        }
+        if(open > close){
+            return;
+        }
+        if(open !=0){
+            printallparan(open-1, close, ans+"(",arr);
+        }
+        if(close !=0){
+            printallparan(open, close-1, ans+")",arr);
+        }
+           
+    }
+}
