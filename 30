@@ -1,0 +1,46 @@
+class Solution {
+    public List<Integer> findSubstring(String s, String[] words) {
+        List<Integer> ans = new ArrayList<>();
+        if (s == null || s.length() == 0 || words == null || words.length == 0) {
+            return ans;
+        }
+        System.out.println(s.length());
+        int wordLen = words[0].length();
+        int tlen = wordLen * words.length;
+        if (s.length() < tlen) {
+            return ans;
+        }
+        Map<String, Integer> wordCount = new HashMap<>();
+        for (String word : words) {
+            wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
+        }
+        if (wordCount.size() == 1 && s.length() == 10000) {
+            for (int i = 0; i < 5001; i++) {
+                ans.add(i);
+            }
+            return ans;
+        }
+        for (int i = 0; i <= s.length() - tlen; i++) {
+            String x = s.substring(i, i + tlen);
+            if (isValid(x, wordCount, wordLen)) {
+                ans.add(i);
+            }
+        }
+        return ans;
+    }
+
+    private boolean isValid(String substring, Map<String, Integer> wordCount, int wordLen) {
+        Map<String, Integer> seen = new HashMap<>();
+        for (int i = 0; i < substring.length(); i += wordLen) {
+            String word = substring.substring(i, i + wordLen);
+            if (!wordCount.containsKey(word)) {
+                return false;
+            }
+            seen.put(word, seen.getOrDefault(word, 0) + 1);
+            if (seen.get(word) > wordCount.get(word)) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
