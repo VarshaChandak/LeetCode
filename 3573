@@ -1,0 +1,36 @@
+import java.util.*;
+
+class Solution {
+    void print(int k, int size, long[][] prof) {
+        for (int i = 0; i <= k; i++) {
+            for (int j = 0; j <= size; j++) {
+                System.out.print(prof[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public long maximumProfit(int[] price, int k) {
+        int size = price.length;
+        long[][] prof = new long[k + 1][size + 1];
+
+        long temp = Long.MAX_VALUE;
+
+        for (int j = 1; j <= k; j++) {
+            long currmax = Long.MIN_VALUE;
+            long ms = Long.MIN_VALUE;
+
+            for (int i = size - 1; i >= 0; i--) {
+                prof[j][i] = Math.max(prof[j][i + 1], currmax + price[i]);
+                if (ms > -temp) { 
+                    prof[j][i] = Math.max(prof[j][i], ms - price[i]);
+                }
+                currmax = Math.max(currmax, prof[j - 1][i + 1] - price[i]);
+                ms = Math.max(ms, prof[j - 1][i + 1] + price[i]);
+            }
+        }
+
+
+        return prof[k][0];
+    }
+}
