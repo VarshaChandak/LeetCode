@@ -1,0 +1,44 @@
+import java.util.*;
+
+class Solution {
+    public int minSwaps(int[] nums) {
+        int n = nums.length;
+        List<Integer> a = new ArrayList<>();
+        for (int p : nums) a.add(p);
+
+        Collections.sort(a, (x, y) -> {
+            int sx = ds(x);
+            int sy = ds(y);
+            if (sx != sy) return sx - sy;
+            return x - y;
+        });
+
+        Map<Integer, Integer> m = new HashMap<>();
+        for (int i = 0; i < n; i++) m.put(a.get(i), i);
+
+        boolean b[] = new boolean[n];
+        int z = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (b[i] || m.get(nums[i]) == i) continue;
+
+            int c = 0, j = i;
+            while (!b[j]) {
+                b[j] = true;
+                j = m.get(nums[j]);
+                c++;
+            }
+            if (c > 1) z += c - 1;
+        }
+        return z;
+    }
+
+    private int ds(int q) {
+        int p = 0;
+        while (q > 0) {
+            p += q % 10;
+        q/= 10;
+        }
+        return p;
+    }
+}

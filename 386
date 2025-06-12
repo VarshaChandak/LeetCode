@@ -1,0 +1,19 @@
+class Solution {  
+    public List<Integer> lexicalOrder(int n) {  
+        ArrayList<Integer> arr = new ArrayList<>();
+        for (int i = 1; i <= 9; i++) {
+            lexi(i, n, arr);
+        }
+        return arr;
+        }
+    public static void lexi(int n,int num,ArrayList arr){
+        if(n > num){
+            return;
+        }
+        arr.add(n);
+        for(int i=0;i<=9;i++){
+            int next=(n*10)+i;
+                lexi(next,num,arr);
+        }
+    }
+}

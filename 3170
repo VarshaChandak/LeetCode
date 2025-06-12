@@ -1,0 +1,35 @@
+class Solution {
+    public String clearStars(String s) {
+        TreeMap<Character, Deque<Integer>> map = new TreeMap<>();
+        char[] arr = s.toCharArray();
+        int n = arr.length;
+
+        for (int i = 0; i < n; i++) {
+            if (arr[i] == '*') {
+                if (!map.isEmpty()) {
+                    char minChar = map.firstKey();
+                    Deque<Integer> positions = map.get(minChar);
+
+                    int removeIdx = positions.removeLast();
+                    arr[removeIdx] = '*';
+
+                    if (positions.isEmpty()) {
+                        map.remove(minChar);
+                    }
+                }
+            } else {
+                map.putIfAbsent(arr[i], new ArrayDeque<>());
+                map.get(arr[i]).addLast(i);
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (char c : arr) {
+            if (c != '*') {
+                sb.append(c);
+            }
+        }
+
+        return sb.toString();
+    }
+}
