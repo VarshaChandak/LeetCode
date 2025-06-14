@@ -1,0 +1,39 @@
+class Solution {
+    public int minMaxDifference(int num) {
+        int rem = num;
+        int fnine=-1;
+        int first=-1;
+        while(rem>0){
+            int curr = rem % 10;
+            rem=rem/10;
+            if(curr!=9){
+                fnine=curr;
+            }
+            first=curr;
+        }
+        if(fnine==-1){
+            return num;
+        }
+        rem=num;
+        int max =0;
+        int min =0;
+        int mul=1;
+        while(rem>0){
+            int curr= rem % 10;
+            rem=rem/10;
+            int mini=curr;
+            int maxi=curr;
+            if(curr==fnine){
+                maxi=9;
+            }
+            if(curr==first){
+                mini=0;
+            }
+            max+= mul*maxi;
+            min+= mul*mini;
+            mul*=10;
+
+        }
+        return max-min;
+    }
+}
