@@ -1,3 +1,48 @@
+********************************optimised********************************
+class Solution {
+    public int maxDiff(int num) {
+        int rem = num;
+        int fnine =-1;
+        int fnon =-1;
+       int f=-1;
+        while(rem>0){
+            int cur = rem%10;
+            rem = rem / 10;
+            if(cur!=9){
+                fnine=cur;
+            }
+            if(cur>1){
+                fnon=cur;
+            }
+            f=cur;
+        }
+        int max =0;
+        int min =0;
+        int mul =1;
+        rem = num ;
+        while(rem>0){
+            int curr = rem%10;
+            rem=rem/10;
+            int maxi= curr;
+            int mini = curr;
+            if(curr==fnine){
+                maxi=9;
+            }
+
+            if(curr==fnon && f==1){
+                mini=0;
+            }
+            if(curr==f && f!=-1){
+                mini=1;
+            }
+            max+= mul*maxi;
+            min += mul*mini;
+            mul*=10;
+        }
+        return max-min;
+    }
+}
+**********************************************************
 class Solution {
     public int maxDiff(int num) {
         int rem = num;
