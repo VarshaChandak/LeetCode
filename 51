@@ -1,0 +1,51 @@
+class Solution {
+    public List<List<String>> solveNQueens(int n) {
+        char[][] avail = new char[n][n];
+        for (char[] row : avail) {
+            Arrays.fill(row, '.');
+        }
+        List<List<String>> result = new ArrayList<>();
+        arrange(0, avail, result);
+        return result;
+    }
+
+    public static void arrange(int row, char[][] avail, List<List<String>> result) {
+        if (row == avail.length) {
+            List<String> board = new ArrayList<>();
+            for (int i = 0; i < avail.length; i++) {
+                board.add(new String(avail[i]));
+            }
+            result.add(board);
+            return;
+        }
+        for (int i = 0; i < avail.length; i++) {
+            if (isSafe(row, i, avail)) {
+                avail[row][i] = 'Q';
+                arrange(row + 1, avail, result);
+                avail[row][i] = '.';
+            }
+        }
+    }
+
+    public static boolean isSafe(int row, int col, char[][] avail) {
+        // col
+        for (int i = row; i >= 0; i--) {
+            if (avail[i][col] == 'Q') {
+                return false;
+            }
+        }
+        // above left diagonal
+        for (int i = row, j = col; i >= 0 && j >= 0; i--, j--) {
+            if (avail[i][j] == 'Q') {
+                return false;
+            }
+        }
+        // above right diagonal
+        for (int i = row, j = col; i >= 0 && j < avail.length; i--, j++) {
+            if (avail[i][j] == 'Q') {
+                return false;
+            }
+        }
+        return true;
+    }
+}
