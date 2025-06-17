@@ -1,0 +1,25 @@
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) return root;
+        if (root.left == null && root.right == null) return root;
+
+        return invert(root, root.left, root.right);
+    }
+
+    public TreeNode invert(TreeNode root, TreeNode root1, TreeNode root2) {
+        // swap left and right children
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+
+        // invert left subtree if it exists
+        if (root.left != null)
+            invert(root.left, root.left.left, root.left.right);
+
+        // invert right subtree if it exists
+        if (root.right != null)
+            invert(root.right, root.right.left, root.right.right);
+
+        return root;
+    }
+}
