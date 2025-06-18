@@ -1,0 +1,21 @@
+class Solution {
+    public int[][] divideArray(int[] nums, int k) {
+        int n = nums.length;
+        int en = (n/3);
+        Arrays.sort(nums);
+        int [][] arr = new int[en][3];
+        boolean is = true;
+        int j =0;
+        for(int i =0;i<n-2;i++){
+            arr[j][0]=nums[i];
+            arr[j][1]=nums[i+1];
+            arr[j][2]=nums[i+2];
+            if(arr[j][2]-arr[j][0] > k){
+                return new int[0][0];
+            }
+            j++;
+            i+=2;
+        }
+        return arr;
+    }
+}
