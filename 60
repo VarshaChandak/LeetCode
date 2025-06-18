@@ -1,0 +1,27 @@
+import java.util.ArrayList;
+
+class Solution {
+    public String getPermutation(int n, int k) {
+        ArrayList<Integer> numbers = new ArrayList<>();
+        int[] fact = new int[n];
+        StringBuilder result = new StringBuilder();
+        int factorial = 1;
+        for (int i = 1; i <= n; i++) {
+            numbers.add(i);
+            factorial *= i;
+            fact[i - 1] = factorial;
+        }
+        // Decrease k by 1 to handle 0-indexing
+        k--;
+        // Compute the k-th permutation
+        for (int i = n; i > 0; i--) {
+            factorial /= i; // i! becomes (i-1)!
+            int index = k / factorial; // Find the index for the current digit
+            result.append(numbers.get(index)); // Add that digit to the result
+            numbers.remove(index); // Remove used digit
+            k %= factorial; // Update k for the next digit
+        }
+
+        return result.toString();
+    }
+}
