@@ -1,0 +1,41 @@
+class Solution {
+    int ans = 0;
+    public int uniquePathsIII(int[][] grid) {
+        int m = grid.length , n = grid[0].length;
+        int xs = 0 , ys = 0;
+        int length = 0;
+        for(int i = 0 ; i < m ; i++){
+            for(int j = 0 ; j < n ; j++){
+                if(grid[i][j] == 1) {
+                    xs = i;
+                    ys = j;
+                }
+                if(grid[i][j] != -1) length++;
+            }
+        }
+        
+        boolean [][]visited = new boolean[m][n];
+
+        backtrack(m , n , grid , visited , xs , ys , 1 , length);
+
+        return ans;
+    }
+    private void backtrack(int m , int n , int[][] grid , boolean [][] visited , int xs , int ys, int dist , int len){
+        if(xs<0 || xs>=m || ys<0 || ys>=n || grid[xs][ys]==-1 || visited[xs][ys]){
+            return;
+        }
+        if(grid[xs][ys] == 2 && dist == len){
+            ans++;
+            return;
+        }
+        
+        visited[xs][ys] = true;
+
+        backtrack(m , n , grid , visited , xs - 1 , ys , dist+1 , len);
+        backtrack(m , n , grid , visited , xs , ys - 1 , dist+1 , len);
+        backtrack(m , n , grid , visited , xs , ys + 1 , dist+1 , len);
+        backtrack(m , n , grid , visited , xs + 1 , ys , dist+1 , len);
+
+        visited[xs][ys] = false;
+    }
+}
